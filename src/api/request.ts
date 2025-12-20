@@ -1,0 +1,59 @@
+/**
+ * Axios 请求配置
+ */
+import axios from 'axios'
+import { ElMessage } from 'element-plus'
+import { toCamelCase, toSnakeCase } from '@/utils/case'
+
+const request = axios.create({
+  baseURL: '/api/v1',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+
+// 请求拦截器
+request.interceptors.request.use(
+  (config) => {
+    // 可以在这里添加 token 等认证信息
+    // const token = localStorage.getItem('token')
+    // if (token) {
+    //   config.headers.Authorization = `Bearer ${token}`
+    // }
+    // if (config.data) {
+    //   config.data = toSnakeCase(config.data)
+    // }
+    // if (config.params) {
+    //   config.params = toSnakeCase(config.params)
+    // }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+// 响应拦截器
+request.interceptors.response.use(
+  (response) => {
+    // 后端统一返回 { code, message, data }
+    const res = response.data
+    if (res && typeof res === 'object' && 'data' in res) {
+      return toCamelCase(res.data)
+    }
+    return toCamelCase(res)
+  },
+  (error) => {
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.detail ||
+      error.message ||
+      '请求失败'
+    ElMessage.error(message)
+    return Promise.reject(error)
+  }
+)
+
+export default request
+

@@ -17,11 +17,23 @@ dist-ssr
 # Vite / tooling caches
 .vite
 .turbo
+.cache
+.parcel-cache
+.eslintcache
 
 # Env files
 .env
 .env.*.local
 .env.local
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Test coverage / e2e artifacts
+coverage
+.nyc_output
+cypress/videos
+cypress/screenshots
 
 # Misc
 *.local

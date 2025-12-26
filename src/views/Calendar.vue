@@ -99,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useTaskStore } from '@/stores/task'
 import { storeToRefs } from 'pinia'
 import type { Task } from '@/types/task'
@@ -115,7 +115,7 @@ const taskDialogVisible = ref(false)
 const showCreateDialog = ref(false)
 const editingTask = ref<Task | null>(null)
 
-const { tasks, loading } = storeToRefs(taskStore)
+const { tasks } = storeToRefs(taskStore)
 
 onMounted(async () => {
   await taskStore.fetchTasks()

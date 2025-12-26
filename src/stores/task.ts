@@ -3,7 +3,14 @@
  */
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { Task, TaskCreate, TaskUpdate, ScheduleResponse, CalendarConfig } from '@/types/task'
+import type {
+  Task,
+  TaskCreate,
+  TaskUpdate,
+  ScheduleResponse,
+  CalendarConfig,
+  RescheduleRequest
+} from '@/types/task'
 import * as todoApi from '@/api/todo'
 
 export const useTaskStore = defineStore('task', () => {
@@ -118,7 +125,7 @@ export const useTaskStore = defineStore('task', () => {
   }
 
   // 自动重新调度
-  async function reschedule(data?: { current_time?: string | null }) {
+  async function reschedule(data?: RescheduleRequest) {
     loading.value = true
     try {
       await todoApi.autoReschedule(data)

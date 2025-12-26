@@ -137,14 +137,17 @@ const dialogVisible = computed({
   set: (value) => emit('update:modelValue', value)
 })
 
-const formData = ref<TaskCreate | TaskUpdate>({
+type TaskFormModel = TaskCreate & Partial<TaskUpdate>
+
+const formData = ref<TaskFormModel>({
   title: '',
   startTime: '',
   durationHours: 1,
   dueDate: '',
   priority: 3,
   dependsOn: [],
-  finalDeadline: null
+  finalDeadline: null,
+  completed: false
 })
 
 const rules: FormRules = {
@@ -196,7 +199,8 @@ watch(
         dueDate: dayjs().add(1, 'day').format('YYYY-MM-DDTHH:mm:ss'),
         priority: 3,
         dependsOn: [],
-        finalDeadline: null
+        finalDeadline: null,
+        completed: false
       }
     }
   },

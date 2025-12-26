@@ -3,7 +3,7 @@
  */
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-import { toCamelCase, toSnakeCase } from '@/utils/case'
+import { toCamelCase } from '@/utils/case'
 
 const request = axios.create({
   baseURL: '/api/v1',
@@ -20,12 +20,6 @@ request.interceptors.request.use(
     // const token = localStorage.getItem('token')
     // if (token) {
     //   config.headers.Authorization = `Bearer ${token}`
-    // }
-    // if (config.data) {
-    //   config.data = toSnakeCase(config.data)
-    // }
-    // if (config.params) {
-    //   config.params = toSnakeCase(config.params)
     // }
     return config
   },
